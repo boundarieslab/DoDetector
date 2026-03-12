@@ -1,39 +1,45 @@
 <html>
 <body>
-<h3>Plugin Builder Results</h3>
+<h3>DoDetector</h3>
+<p>Terrain change detection using DEM of Difference (DoD) analysis.</p>
 
-Congratulations! You just built a plugin for QGIS!<br/><br />
+<p>DoDetector calculates elevation changes between multi-temporal DTM pairs, filters noise, reports volumetric statistics, and generates a Terrain Ruggedness Index (TRI) output. Optimized for Norwegian Kartverket DTM data.</p>
 
-<div id='help' style='font-size:.9em;'>
-Your plugin <b>DoDetector</b> was created in:<br>
-&nbsp;&nbsp;<b>D:/05_LABORATORY_FOR_URBAN_BOUNDARIES/01_PRO/01_DIRTY_BUSINESS/ANALISIS/DoD/01_PLUGIN\dod</b>
-<p>
-Your QGIS plugin directory is located at:<br>
-&nbsp;&nbsp;<b>C:/Users/sir_c/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins</b>
-<p>
-<h3>What's Next</h3>
-<ol>
-    <li>Test the generated sources using <b>make test</b> (or run tests from your IDE)
-    <li>Copy the entire directory containing your new plugin to the QGIS plugin directory (see Notes below)
-    <li>Test the plugin by enabling it in the QGIS plugin manager and enabling the provider in the Processing Options
-    <li>Customize it by editing the implementation file <b>dod_algorithm.py</b>
-</ol>
-Notes:
+<h3>Usage</h3>
+<p>Find the algorithm in the <b>Processing Toolbox</b> under <b>DoDetector → Terrain Change Detection → Calculate DoD</b>.</p>
+
+<h4>Parameters</h4>
+<table border="1" cellpadding="4" cellspacing="0">
+  <tr><th>Parameter</th><th>Description</th><th>Default</th></tr>
+  <tr><td>Input mode</td><td>Single files or folders of DTM tiles</td><td>Single files</td></tr>
+  <tr><td>Old/Reference DTM</td><td>Baseline terrain (e.g. 2018)</td><td>—</td></tr>
+  <tr><td>New/Comparison DTM</td><td>More recent terrain (e.g. 2022)</td><td>—</td></tr>
+  <tr><td>File pattern</td><td>Filter when using folders (e.g. *.tif)</td><td>*.tif</td></tr>
+  <tr><td>NoData value</td><td>Value representing no data</td><td>-9999</td></tr>
+  <tr><td>Minimum detection threshold</td><td>Noise filter / minLoD in meters</td><td>0.70</td></tr>
+</table>
+
+<h4>Recommended thresholds</h4>
 <ul>
-    <li>You can use the <b>Makefile</b> to compile and deploy when you
-        make changes. This requires GNU make (gmake). The Makefile is ready to use, however you 
-        will have to edit it to add addional Python source files, dialogs, and translations.
-    <li>You can also use <b>pb_tool</b> to compile and deploy your plugin. Tweak the <i>pb_tool.cfg</i> file included with your plugin as you add files. Install <b>pb_tool</b> using 
-        <i>pip</i> or <i>easy_install</i>. See <b>http://loc8.cc/pb_tool</b> for more information.
+  <li><b>DTM10</b> (10 m resolution): 0.50 – 1.00 m</li>
+  <li><b>DTM1</b> (1 m resolution): 0.20 – 0.50 m</li>
 </ul>
-</div>
-<div style='font-size:.9em;'>
-<p>
-For information on writing PyQGIS code, see <b>http://loc8.cc/pyqgis_resources</b> for a list of resources.
-</p>
-</div>
-<p>
-&copy;2011-2018 GeoApt LLC - geoapt.com 
-</p>
+
+<h4>Output interpretation</h4>
+<ul>
+  <li><b>Positive values</b> → terrain rose (fill, deposition)</li>
+  <li><b>Negative values</b> → terrain lowered (cut, excavation)</li>
+  <li><b>TRI raster</b> → highlights edges and boundaries of modified areas</li>
+</ul>
+
+<h3>Links</h3>
+<ul>
+  <li><b>Repository:</b> <a href="https://github.com/boundarieslab/DoDetector">github.com/boundarieslab/DoDetector</a></li>
+  <li><b>Bug tracker:</b> <a href="https://github.com/boundarieslab/DoDetector/issues">github.com/boundarieslab/DoDetector/issues</a></li>
+  <li><b>Project:</b> <a href="https://dirtybusiness.no">dirtybusiness.no</a></li>
+</ul>
+
+<p><b>Author:</b> <a href="https://lub.global">Laboratory for Urban Boundaries (LUB)</a> — Oslo, Norway</p>
+<p>Licensed under GNU General Public License v2.</p>
 </body>
 </html>
