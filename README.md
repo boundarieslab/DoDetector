@@ -1,0 +1,85 @@
+DoDetector
+
+Terrain change detection using DEM of Difference (DoD) analysis for QGIS.
+DoDetector is a QGIS Processing plugin that calculates elevation changes between multi-temporal Digital Terrain Model (DTM) pairs. It merges tiled datasets, harmonizes CRS and resolution, computes the difference raster, filters noise, reports volumetric statistics, and generates a Terrain Ruggedness Index (TRI) output. Optimized for Norwegian Kartverket DTM data.
+Developed by Laboratory for Urban Boundaries (LUB) as part of the Dirty Business project.
+Features
+
+Accepts single DTM files or folders of tiled rasters (auto-merged via VRT)
+Automatic CRS harmonization and reprojection between input datasets
+Intersection-based clipping to the common extent of both DTMs
+Resolution alignment to the finer of the two inputs
+DEM of Difference calculation (New − Old)
+Noise filtering with configurable minimum Level of Detection (minLoD) threshold
+Change statistics: area, volume estimates, net cut/fill balance
+TRI (Terrain Ruggedness Index) computed on the DoD output
+Classification presets for categorizing change magnitude
+
+Installation
+From the QGIS Plugin Repository
+
+Open QGIS
+Go to Plugins → Manage and Install Plugins
+Search for DoDetector
+Click Install Plugin
+
+From source
+
+Clone this repository:
+
+bash   git clone https://github.com/boundarieslab/DoDetector.git
+
+Copy the plugin folder to your QGIS plugins directory:
+
+Windows: %APPDATA%/QGIS/QGIS3/profiles/default/python/plugins/
+macOS: ~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/
+Linux: ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
+
+
+Restart QGIS and enable DoDetector in the Plugin Manager
+
+Usage
+Once installed, find the algorithm in the Processing Toolbox under DoDetector → Terrain Change Detection → Calculate DoD.
+Parameters
+ParameterDescriptionDefaultInput modeSingle files or folders of DTM tilesSingle filesOld/Reference DTMBaseline terrain (e.g. 2018)—New/Comparison DTMMore recent terrain (e.g. 2022)—File patternFilter when using folders (e.g. *.tif)*.tifNoData valueValue representing no data-9999Minimum detection thresholdNoise filter / minLoD in meters0.70
+Recommended thresholds
+DTM resolutionSuggested minLoDDTM10 (10 m)0.50 – 1.00 mDTM1 (1 m)0.20 – 0.50 m
+Output interpretation
+
+Positive values → terrain rose (fill, deposition, mass reception)
+Negative values → terrain lowered (cut, excavation, erosion)
+TRI raster → highlights edges and boundaries of modified areas
+
+Workflow
+
+Load inputs (single rasters or folders with tiles)
+Build VRT if multiple tiles are provided
+Check and harmonize CRS (reproject if different)
+Handle NoData values
+Calculate intersection extent
+Clip both rasters to common extent
+Align resolution
+Calculate difference (New − Old)
+Apply threshold / noise filter
+Report statistics
+Calculate TRI on the DoD result
+
+Context
+DoDetector was built to support the monitoring of mass deposit and landfill operations across the Oslo metropolitan region (Akershus, Østfold, Oslo). The plugin enables systematic comparison of Kartverket's openly available DTM datasets across time periods to identify unauthorized or unregulated terrain modifications.
+For more information about the research context, visit dirtybusiness.no.
+Requirements
+
+QGIS ≥ 3.16
+GDAL (bundled with QGIS)
+
+License
+This plugin is free software licensed under the GNU General Public License v2.
+Links
+
+Bug tracker: github.com/boundarieslab/DoDetector/issues
+Repository: github.com/boundarieslab/DoDetector
+Project website: dirtybusiness.no
+LUB: lub.global
+
+Authors
+Laboratory for Urban Boundaries (lub) — Oslo, Norway
